@@ -24,11 +24,9 @@
 
 /* _____________ Your Code Here _____________ */
 
-type GetReadonlyKeys<T extends object, U extends keyof T = keyof T> = U extends any
-    ? Equal<Pick<T, U>, Readonly<Pick<T, U>>> extends true
-        ? U
-        : never
-    : never;
+type GetReadonlyKeys<T extends object> = keyof {
+    [K in keyof T as Equal<Pick<T, K>, Readonly<Pick<T, K>>> extends true ? K : never]: T[K];
+};
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils';
