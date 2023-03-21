@@ -20,10 +20,8 @@
 
 /* _____________ Your Code Here _____________ */
 
-import { Split } from './2822-split';
-
-type SnakeCase<T extends string, U extends string = '', S extends any[] = Split<T>> = S extends [infer F, ...infer R]
-    ? SnakeCase<T, `${U}${Equal<F, Uppercase<F & string>> extends true ? `_${Lowercase<F & string>}` : F & string}`, R>
+type SnakeCase<T extends string, U extends string = ''> = T extends `${infer F}${infer R}`
+    ? SnakeCase<R, `${U}${Equal<F, Uppercase<F & string>> extends true ? `_${Lowercase<F & string>}` : F & string}`>
     : U;
 
 /* _____________ Test Cases _____________ */

@@ -88,79 +88,89 @@
 
 /* _____________ Your Code Here _____________ */
 
-type GetTags<B> = any;
+declare const Key: unique symbol;
 
-type Tag<B, T extends string> = any;
+type Case<T extends string[]> = {
+    [Key]?: typeof Key | (typeof Key & Record<any, [T]>);
+};
 
-type UnTag<B> = any;
+type GetTags<T> = [T] extends [never] ? [] : Required<T> extends Required<Case<infer U>> ? U : [];
 
-type HasTag<B, T extends string> = any;
-type HasTags<B, T extends readonly string[]> = any;
-type HasExactTags<B, T extends readonly string[]> = any;
+type Tag<T, U extends string> = true extends Equal<T, null> | Equal<T, undefined>
+  ? T
+  : UnTag<T> & Case<[...GetTags<T>, U]>;
+
+type UnTag<T> = true extends Equal<T, null> | Equal<T, undefined> ? T : Omit<T, typeof Key>;
+
+type HasTag<T, U extends string> = Equal<T extends any ? (U extends GetTags<T>[number] ? true : false) : never, true>;
+
+type HasTags<T, U extends string[]> = GetTags<T> extends [...any[], ...U] | [...U, ...any[]] ? true : false;
+
+type HasExactTags<T, U extends string[]> = Equal<GetTags<T>, U>;
 
 /* _____________ Test Cases _____________ */
-import type { Equal, Expect, IsTrue } from '@type-challenges/utils';
+import type { Equal, Expect, IsTrue } from '@type-challenges/utils'
 
 /**
  * Tests of assignable of tagged variables.
  */
 interface I {
-    foo: string;
+    foo: string
 }
 
-declare let x0: I;
-declare let x1: Tag<I, 'a'>;
-declare let x2: Tag<I, 'b'>;
-declare let x3: Tag<Tag<I, 'a'>, 'b'>;
-declare let x4: Tag<Tag<I, 'b'>, 'a'>;
-declare let x5: Tag<Tag<I, 'c'>, 'a'>;
-declare let x6: Tag<Tag<I, 'c'>, 'b'>;
-declare let x7: UnTag<Tag<Tag<I, 'c'>, 'b'>>;
+declare let x0: I
+declare let x1: Tag<I, 'a'>
+declare let x2: Tag<I, 'b'>
+declare let x3: Tag<Tag<I, 'a'>, 'b'>
+declare let x4: Tag<Tag<I, 'b'>, 'a'>
+declare let x5: Tag<Tag<I, 'c'>, 'a'>
+declare let x6: Tag<Tag<I, 'c'>, 'b'>
+declare let x7: UnTag<Tag<Tag<I, 'c'>, 'b'>>
 
-x0 = x1 = x0 = x2 = x0 = x3 = x0 = x4 = x0 = x5 = x0 = x6 = x0 = x7 = x0;
-x1 = x2 = x1 = x3 = x1 = x4 = x1 = x5 = x1 = x6 = x1 = x7 = x1;
-x2 = x3 = x2 = x4 = x2 = x5 = x2 = x6 = x2 = x7 = x2;
-x3 = x4 = x3 = x5 = x3 = x6 = x3 = x7 = x3;
-x4 = x5 = x4 = x6 = x4 = x7 = x4;
-x5 = x6 = x5 = x7 = x5;
-x6 = x7 = x6;
+x0 = x1 = x0 = x2 = x0 = x3 = x0 = x4 = x0 = x5 = x0 = x6 = x0 = x7 = x0
+x1 = x2 = x1 = x3 = x1 = x4 = x1 = x5 = x1 = x6 = x1 = x7 = x1
+x2 = x3 = x2 = x4 = x2 = x5 = x2 = x6 = x2 = x7 = x2
+x3 = x4 = x3 = x5 = x3 = x6 = x3 = x7 = x3
+x4 = x5 = x4 = x6 = x4 = x7 = x4
+x5 = x6 = x5 = x7 = x5
+x6 = x7 = x6
 
-declare let y0: string;
-declare let y1: Tag<string, 'a'>;
-declare let y2: Tag<string, 'b'>;
-declare let y3: Tag<Tag<string, 'a'>, 'b'>;
-declare let y4: Tag<Tag<string, 'b'>, 'a'>;
-declare let y5: Tag<Tag<string, 'c'>, 'a'>;
-declare let y6: Tag<Tag<string, 'c'>, 'b'>;
-declare let y7: UnTag<Tag<Tag<string, 'c'>, 'b'>>;
+declare let y0: string
+declare let y1: Tag<string, 'a'>
+declare let y2: Tag<string, 'b'>
+declare let y3: Tag<Tag<string, 'a'>, 'b'>
+declare let y4: Tag<Tag<string, 'b'>, 'a'>
+declare let y5: Tag<Tag<string, 'c'>, 'a'>
+declare let y6: Tag<Tag<string, 'c'>, 'b'>
+declare let y7: UnTag<Tag<Tag<string, 'c'>, 'b'>>
 
-y0 = y1 = y0 = y2 = y0 = y3 = y0 = y4 = y0 = y5 = y0 = y6 = y0 = y7 = y0;
-y1 = y2 = y1 = y3 = y1 = y4 = y1 = y5 = y1 = y6 = y1 = y7 = y1;
-y2 = y3 = y2 = y4 = y2 = y5 = y2 = y6 = y2 = y7 = y2;
-y3 = y4 = y3 = y5 = y3 = y6 = y3 = y7 = y3;
-y4 = y5 = y4 = y6 = y4 = y7 = y4;
-y5 = y6 = y5 = y7 = y5;
-y6 = y7 = y6;
+y0 = y1 = y0 = y2 = y0 = y3 = y0 = y4 = y0 = y5 = y0 = y6 = y0 = y7 = y0
+y1 = y2 = y1 = y3 = y1 = y4 = y1 = y5 = y1 = y6 = y1 = y7 = y1
+y2 = y3 = y2 = y4 = y2 = y5 = y2 = y6 = y2 = y7 = y2
+y3 = y4 = y3 = y5 = y3 = y6 = y3 = y7 = y3
+y4 = y5 = y4 = y6 = y4 = y7 = y4
+y5 = y6 = y5 = y7 = y5
+y6 = y7 = y6
 
 // @ts-expect-error
-x0 = y0;
+x0 = y0
 // @ts-expect-error
-x1 = y1;
+x1 = y1
 // @ts-expect-error
-x2 = y2;
+x2 = y2
 // @ts-expect-error
-x3 = y3;
+x3 = y3
 // @ts-expect-error
-x4 = y4;
+x4 = y4
 // @ts-expect-error
-x5 = y5;
+x5 = y5
 // @ts-expect-error
-x6 = y6;
+x6 = y6
 // @ts-expect-error
-x7 = y7;
+x7 = y7
 
-declare const UNIQUE_SYMBOL: unique symbol;
-type US = typeof UNIQUE_SYMBOL;
+declare const UNIQUE_SYMBOL: unique symbol
+type US = typeof UNIQUE_SYMBOL
 
 /**
  * Tests of API (Tag, GetTags, Untag, HasTag, HasTags, HasExactTags).
@@ -186,7 +196,12 @@ type cases = [
     IsTrue<Equal<GetTags<Tag<string, 'foo'>>, ['foo']>>,
     IsTrue<Equal<GetTags<Tag<never, 'foo'>>, ['foo']>>,
     IsTrue<Equal<GetTags<Tag<Tag<string, 'foo'>, 'bar'>>, ['foo', 'bar']>>,
-    IsTrue<Equal<GetTags<Tag<Tag<Tag<{}, 'foo'>, 'bar'>, 'baz'>>, ['foo', 'bar', 'baz']>>,
+    IsTrue<
+      Equal<
+        GetTags<Tag<Tag<Tag<{}, 'foo'>, 'bar'>, 'baz'>>,
+        ['foo', 'bar', 'baz']
+      >
+    >,
 
     /**
      * UnTag.
@@ -253,8 +268,8 @@ type cases = [
     Expect<Equal<HasExactTags<Tag<{}, 'foo'>, ['bar']>, false>>,
     Expect<Equal<HasExactTags<Tag<Tag<Tag<{}, 'foo'>, 'bar'>, 'baz'>, ['foo', 'bar']>, false>>,
     Expect<Equal<HasExactTags<Tag<Tag<Tag<{}, 'foo'>, 'bar'>, 'baz'>, ['foo', 'bar', 'baz']>, true>>,
-    Expect<Equal<HasExactTags<Tag<Tag<void, 'foo'>, 'bar'>, ['foo', 'bar']>, true>>
-];
+    Expect<Equal<HasExactTags<Tag<Tag<void, 'foo'>, 'bar'>, ['foo', 'bar']>, true>>,
+]
 
 /* _____________ Further Steps _____________ */
 /*
