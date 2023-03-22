@@ -77,7 +77,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-import { MyReturnType } from './2-get-return-type';
+import type { MyReturnType } from './2-get-return-type';
 
 type GettersThis<C extends Record<string, Function>> = { readonly [K in keyof C]: MyReturnType<C[K]> };
 

@@ -25,9 +25,10 @@
 
 /* _____________ Your Code Here _____________ */
 
-import { Split } from './2822-split';
-import { Addition, Digit, Range, StepSum } from './476-sum';
-import { Join } from './5310-join';
+import type { Split } from './2822-split';
+import type { Addition, Digit, StepSum } from './476-sum';
+import type { Join } from './5310-join';
+import type { Range } from './2257-minus-one';
 
 type Multiplication<
     D1 extends Digit,

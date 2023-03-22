@@ -32,7 +32,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-import { Join } from './5310-join';
+import type { Join } from './5310-join';
 
 declare function join<D extends string>(delimiter: D): <T extends string[]>(...parts: T) => Join<T, D>;
 

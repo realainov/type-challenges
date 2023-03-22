@@ -21,9 +21,9 @@
 
 /* _____________ Your Code Here _____________ */
 
-import { Join } from './5310-join';
-import { Split } from './2822-split';
-import { Range } from './2257-minus-one';
+import type { Join } from './5310-join';
+import type { Split } from './2822-split';
+import type { Range } from './2257-minus-one';
 
 export type Digit = string | number | bigint;
 

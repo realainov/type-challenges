@@ -46,7 +46,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-import { MyReturnType } from './2-get-return-type';
+import type { MyReturnType } from './2-get-return-type';
 
 export type ComputedThis<C extends Record<string, Function>> = { [K in keyof C]: MyReturnType<C[K]> };
 

@@ -13,7 +13,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-import { Join } from './5310-join';
+import type { Join } from './5310-join';
 
 type EncodeSequence<T extends string[]> = `${T['length'] extends 1 ? '' : T['length']}${T[0]}`;
 

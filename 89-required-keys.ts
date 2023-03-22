@@ -19,7 +19,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-import { GetRequired } from './57-get-required';
+import type { GetRequired } from './57-get-required';
 
 type RequiredKeys<T extends object> = keyof GetRequired<T>;
 

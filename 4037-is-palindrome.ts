@@ -19,7 +19,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-import { Split } from './2822-split';
+import type { Split } from './2822-split';
 
 type IsPalindrome<T extends string | number, U = Split<`${T}`>> = U extends [infer S, ...any[], infer L]
     ? Equal<S, L> extends true

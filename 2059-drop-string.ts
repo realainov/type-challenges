@@ -18,8 +18,8 @@
 
 /* _____________ Your Code Here _____________ */
 
-import { Split } from './2822-split';
-import { Join } from './5310-join';
+import type { Split } from './2822-split';
+import type { Join } from './5310-join';
 
 type Filter<T extends any[], U, S extends any[] = []> = T extends [infer F, ...infer R]
     ? Filter<R, U, F extends U ? S : [...S, F]>

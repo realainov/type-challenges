@@ -25,7 +25,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-type RemoveIndexSignature<T extends object> = {
+export type RemoveIndexSignature<T extends object> = {
     [K in keyof T as Equal<K, string> & Equal<K, number> & Equal<K, symbol> extends true ? never : K]: T[K];
 };
 

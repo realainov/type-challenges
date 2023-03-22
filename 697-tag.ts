@@ -91,7 +91,7 @@
 declare const Key: unique symbol;
 
 type Case<T extends string[]> = {
-    [Key]?: typeof Key | (typeof Key & Record<any, [T]>);
+    [Key]?: typeof Key | (typeof Key & Record<any, T>);
 };
 
 type GetTags<T> = [T] extends [never] ? [] : Required<T> extends Required<Case<infer U>> ? U : [];

@@ -38,9 +38,9 @@
 
 /* _____________ Your Code Here _____________ */
 
-import { Last } from './15-last-of-array';
-import { Slice } from './216-slice';
-import { Range } from './2257-minus-one';
+import type { Last } from './15-last-of-array';
+import type { Slice } from './216-slice';
+import type { Range } from './2257-minus-one';
 
 type _CurriedFunction<R, P extends any[], L extends number = P['length']> = L extends 1
     ? (...args: P) => R

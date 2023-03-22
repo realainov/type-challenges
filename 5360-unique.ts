@@ -20,7 +20,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-import { Includes } from './898-includes';
+import type { Includes } from './898-includes';
 
 type Unique<T extends any[], U extends any[] = []> = T extends [infer F, ...infer R]
     ? Unique<R, Includes<U, F> extends true ? U : [...U, F]>

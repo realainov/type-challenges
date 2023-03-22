@@ -19,9 +19,9 @@
 
 /* _____________ Your Code Here _____________ */
 
-import { Range } from './2257-minus-one';
-import { FilterOut } from './399-tuple-filter';
-import { NumberRange } from './8640-number-range';
+import type { Range } from './2257-minus-one';
+import type { FilterOut } from './399-tuple-filter';
+import type { NumberRange } from './8640-number-range';
 
 type Subtract<T extends string | number, U extends string | number> = Range<T> extends [...Range<U>, ...infer R]
     ? R['length']

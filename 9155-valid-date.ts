@@ -26,7 +26,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-import { NumberRange } from './8640-number-range';
+import type { NumberRange } from './8640-number-range';
 
 type Exception = `02${NumberRange<29, 31>}`;
 

@@ -12,7 +12,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-import { GetOptional } from './59-get-optional';
+import type { GetOptional } from './59-get-optional';
 
 type OptionalKeys<T extends object> = keyof GetOptional<T>;
 

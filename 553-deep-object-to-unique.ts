@@ -14,7 +14,7 @@
   For example,
   
   ```ts
-  import { Equal } from "@type-challenges/utils"
+  import type { Equal } from "@type-challenges/utils"
   
   type Foo = { foo: 2; bar: { 0: 1 }; baz: { 0: 1 } }
   

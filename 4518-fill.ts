@@ -19,7 +19,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-import { NumberRange } from './8640-number-range';
+import type { NumberRange } from './8640-number-range';
 
 type Fill<
     T extends any[],

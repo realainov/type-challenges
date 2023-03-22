@@ -18,7 +18,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-import { Split } from './2822-split';
+import type { Split } from './2822-split';
 
 type Degree<T extends number, U extends any[] = [0], S extends any[] = []> = S['length'] extends T
     ? U

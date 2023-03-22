@@ -26,7 +26,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-import { NumberRange } from './8640-number-range';
+import type { NumberRange } from './8640-number-range';
 
 type _Fizz<T extends number> = Sum<T> extends 0 | 3 | 6 | 9 ? 'Fizz' : '';
 

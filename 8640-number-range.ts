@@ -1,22 +1,22 @@
 /*
   8640 - Number Range
   -------
-  by AaronGuo (@HongxuanG) #medium 
-  
+  by AaronGuo (@HongxuanG) #medium
+
   ### Question
-  
+
   Sometimes we want to limit the range of numbers...
   For examples.
   ```
-  type result = NumberRange<2 , 9> //  | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 
+  type result = NumberRange<2 , 9> //  | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
   ```
-  
+
   > View on GitHub: https://tsch.js.org/8640
 */
 
 /* _____________ Your Code Here _____________ */
 
-import { Range } from './2257-minus-one';
+import type { Range } from './2257-minus-one';
 
 export type NumberRange<
     S extends number,
@@ -24,8 +24,6 @@ export type NumberRange<
     SR extends number[] = Range<S>,
     ER extends number[] = Range<E>
 > = Exclude<ER[number], SR[number]> | E;
-
-type N = NumberRange<1, 5>
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils';

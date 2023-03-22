@@ -48,7 +48,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-import { ComputedThis } from './6-simple-vue';
+import type { ComputedThis } from './6-simple-vue';
 
 type Constructor = { new (...args: any): any };
 

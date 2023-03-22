@@ -18,7 +18,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-import { Includes } from './898-includes';
+import type { Includes } from './898-includes';
 
 type Without<T extends any[], U> = T extends [infer F, ...infer R]
     ? (U extends any[] ? Includes<U, F> : Equal<U, F>) extends true

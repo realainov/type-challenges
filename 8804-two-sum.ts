@@ -12,7 +12,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-import { Range } from './2257-minus-one';
+import type { Range } from './2257-minus-one';
 
 type Sum<T extends number, U extends number> = [...Range<T>, ...Range<U>]['length'];
 

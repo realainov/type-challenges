@@ -18,9 +18,9 @@
 
 /* _____________ Your Code Here _____________ */
 
-import { Range } from './2257-minus-one';
-import { Split } from './2822-split';
-import { Absolute } from './529-absolute';
+import type { Range } from './2257-minus-one';
+import type { Split } from './2822-split';
+import type { Absolute } from './529-absolute';
 
 enum Comparison {
     Greater,

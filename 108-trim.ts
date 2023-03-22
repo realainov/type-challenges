@@ -18,8 +18,8 @@
 
 /* _____________ Your Code Here _____________ */
 
-import { TrimLeft } from './106-trim-left';
-import { TrimRight } from './4803-trim-right';
+import type { TrimLeft } from './106-trim-left';
+import type { TrimRight } from './4803-trim-right';
 
 type Trim<T extends string> = TrimRight<TrimLeft<T>>;
 

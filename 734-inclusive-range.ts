@@ -18,7 +18,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-import { Range } from './2257-minus-one';
+import type { Range } from './2257-minus-one';
 
 type InclusiveRange<T extends number, U extends number> = Range<U> extends [...Range<T>, ...infer R] ? [...R, U] : [];
 

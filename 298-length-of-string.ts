@@ -12,7 +12,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-import { Split } from './2822-split';
+import type { Split } from './2822-split';
 
 type LengthOfString<S extends string> = Split<S>['length'];
 
