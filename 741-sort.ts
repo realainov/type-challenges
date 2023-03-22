@@ -30,10 +30,10 @@
 
 /* _____________ Your Code Here _____________ */
 
+import type { Length } from './18-length-of-tuple';
 import type { Range } from './2257-minus-one';
 import type { Reverse } from './3192-reverse';
 import type { UnionToTuple } from './730-union-to-tuple';
-import type { Length } from './18-length-of-tuple';
 
 type Count<T extends any[], U extends Record<number, any[]> = {}> = T extends [infer F, ...infer R]
     ? F extends keyof U
@@ -43,11 +43,12 @@ type Count<T extends any[], U extends Record<number, any[]> = {}> = T extends [i
         : Count<R, U & Record<F, [0]>>
     : MergeInsertions<U>;
 
-type Fill<T extends any[], U extends Record<number, any[]>, S extends any[] = []> = T extends [infer F, ...infer R]
-    ? F extends keyof U
-        ? U[F] extends any[]
-            ? Fill<R, U, [...S, ...Range<Length<U[F]>, F>]>
-            : never
+type Fill<T extends any[], U extends Record<number, any[]>, S extends any[] = []> = T extends [
+    infer F extends keyof U,
+    ...infer R
+]
+    ? U[F] extends any[]
+        ? Fill<R, U, [...S, ...Range<Length<U[F]>, F>]>
         : never
     : S;
 

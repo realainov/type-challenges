@@ -35,10 +35,8 @@
 
 type Get<T, K> = K extends keyof T
     ? T[K]
-    : K extends `${infer F}.${infer R}`
-    ? F extends keyof T
-        ? Get<T[F], R>
-        : never
+    : K extends `${infer F extends keyof T & string}.${infer R}`
+    ? Get<T[F], R>
     : never;
 
 /* _____________ Test Cases _____________ */

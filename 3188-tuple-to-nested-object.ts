@@ -18,10 +18,8 @@
 
 /* _____________ Your Code Here _____________ */
 
-type TupleToNestedObject<T extends string[], U> = T extends [...infer R, infer L extends string]
-    ? R extends string[]
-        ? TupleToNestedObject<R, MergeInsertions<Record<L, U>>>
-        : never
+type TupleToNestedObject<T extends string[], U> = T extends [...infer R extends string[], infer L extends string]
+    ? TupleToNestedObject<R, MergeInsertions<Record<L, U>>>
     : U;
 
 /* _____________ Test Cases _____________ */

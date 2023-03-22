@@ -27,10 +27,11 @@ import type { Range } from './2257-minus-one';
 import type { NumberLike } from './2257-minus-one';
 import type { Length } from './18-length-of-tuple';
 
-export type Addition<T extends any[], U extends any[] = []> = T extends [infer F extends NumberLike, ...infer R]
-    ? R extends NumberLike[]
-        ? Addition<R, [...U, ...Range<F>]>
-        : never
+export type Addition<T extends any[], U extends any[] = []> = T extends [
+    infer F extends NumberLike,
+    ...infer R extends NumberLike[]
+]
+    ? Addition<R, [...U, ...Range<F>]>
     : Split<Length<U>>;
 
 type _StepSum<S extends any[], T extends any[], R> = Length<S> extends 0

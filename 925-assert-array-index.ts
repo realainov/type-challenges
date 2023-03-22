@@ -114,10 +114,8 @@ type CharMap<
     S extends any[] = [0]
 > = U extends `${infer F}${infer R}` ? CharMap<T & Record<F, Length<S>>, R, [...S, 0]> : T;
 
-type DecodeKey<T extends string, U extends string = ''> = T extends `${infer F}${infer R}`
-    ? F extends keyof CharMap
-        ? DecodeKey<R, `${U}${CharMap[F]}`>
-        : never
+type DecodeKey<T extends string, U extends string = ''> = T extends `${infer F extends keyof CharMap}${infer R}`
+    ? DecodeKey<R, `${U}${CharMap[F]}`>
     : ToNumber<U>;
 
 function assertArrayIndex<T extends readonly any[], U extends string>(

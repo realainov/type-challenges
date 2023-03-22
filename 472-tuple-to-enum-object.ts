@@ -42,10 +42,8 @@ type Enum<
     N extends boolean = false,
     U extends object = {},
     C extends number[] = []
-> = T extends readonly [infer F, ...infer R]
-    ? R extends string[]
-        ? Enum<R, N, MergeEnum<U, F, N, C>, [...C, 0]>
-        : never
+> = T extends readonly [infer F, ...infer R extends string[]]
+    ? Enum<R, N, MergeEnum<U, F, N, C>, [...C, 0]>
     : MergeInsertions<U>;
 
 /* _____________ Test Cases _____________ */

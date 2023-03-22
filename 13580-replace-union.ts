@@ -12,12 +12,8 @@
 
 /* _____________ Your Code Here _____________ */
 
-type UnionReplace<T, U extends [any, any][]> = U extends [infer F, ...infer R]
-    ? F extends [any, any]
-        ? R extends [any, any][]
-            ? UnionReplace<Exclude<T, F[0]> | F[1], R>
-            : never
-        : never
+type UnionReplace<T, U extends [any, any][]> = U extends [infer F extends [any, any], ...infer R extends [any, any][]]
+    ? UnionReplace<Exclude<T, F[0]> | F[1], R>
     : T;
 
 /* _____________ Test Cases _____________ */
