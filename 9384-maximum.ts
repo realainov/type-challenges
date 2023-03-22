@@ -26,6 +26,7 @@
 /* _____________ Your Code Here _____________ */
 
 import type { Range } from './2257-minus-one';
+import type { Length } from './18-length-of-tuple';
 
 type Maximum<
     T extends any[],
@@ -33,7 +34,7 @@ type Maximum<
     S extends number[] = [U] extends [never] ? [] : U
 > = T extends [infer F, ...infer R]
     ? Maximum<R, Range<F & number> extends [...S, ...any[]] ? Range<F & number> : U>
-    : U['length'];
+    : Length<U>;
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils';

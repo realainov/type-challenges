@@ -2,15 +2,17 @@
   9286 - FirstUniqueCharIndex
   -------
   by jiangshan (@jiangshanmeta) #medium #string
-  
+
   ### Question
-  
+
   Given a string s, find the first non-repeating character in it and return its index. If it does not exist, return -1. (Inspired by [leetcode 387](https://leetcode.com/problems/first-unique-character-in-a-string/))
-  
+
   > View on GitHub: https://tsch.js.org/9286
 */
 
 /* _____________ Your Code Here _____________ */
+
+import type { Length } from './18-length-of-tuple';
 
 type FirstUniqueCharIndex<
     T extends string,
@@ -19,7 +21,7 @@ type FirstUniqueCharIndex<
 > = U extends `${infer F}${infer R}`
     ? T extends `${string}${F}${string}${F}${string}`
         ? FirstUniqueCharIndex<T, R, [...S, F]>
-        : S['length']
+        : Length<S>
     : -1;
 
 /* _____________ Test Cases _____________ */

@@ -26,9 +26,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-type PartialByKeys<T extends object, U extends keyof T = keyof T> = MergeInsertions<
-    Omit<T, U> & Partial<Pick<T, U>>
->;
+type PartialByKeys<T extends object, U extends keyof T = keyof T> = MergeInsertions<Omit<T, U> & Partial<Pick<T, U>>>;
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect, MergeInsertions } from '@type-challenges/utils';

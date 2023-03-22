@@ -19,13 +19,10 @@
 
 /* _____________ Your Code Here _____________ */
 
-import type { Range } from './2257-minus-one';
 import type { FilterOut } from './399-tuple-filter';
 import type { NumberRange } from './8640-number-range';
-
-type Subtract<T extends string | number, U extends string | number> = Range<T> extends [...Range<U>, ...infer R]
-    ? R['length']
-    : never;
+import type { Subtract } from './7561-subtract';
+import type { Length } from './18-length-of-tuple';
 
 type SliceIndex<T extends number, L extends number> = `${T}` extends `-${infer U}` ? Subtract<L, U> : T;
 
@@ -34,8 +31,8 @@ type SliceDiapason<S extends number, E extends number, L extends number> = Exclu
     SliceIndex<E, L>
 >;
 
-export type Slice<T extends any[], S extends number = 0, E extends number = T['length']> = FilterOut<
-    { [K in keyof T]: K extends `${SliceDiapason<S, E, T['length']>}` ? T[K] : never },
+export type Slice<T extends any[], S extends number = 0, E extends number = Length<T>> = FilterOut<
+    { [K in keyof T]: K extends `${SliceDiapason<S, E, Length<T>>}` ? T[K] : never },
     never
 >;
 

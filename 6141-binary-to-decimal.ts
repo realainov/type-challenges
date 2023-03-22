@@ -19,8 +19,9 @@
 /* _____________ Your Code Here _____________ */
 
 import type { Split } from './2822-split';
+import type { Length } from './18-length-of-tuple';
 
-type Degree<T extends number, U extends any[] = [0], S extends any[] = []> = S['length'] extends T
+type Degree<T extends number, U extends any[] = [0], S extends any[] = []> = Length<S> extends T
     ? U
     : Degree<T, [...U, ...U], [...S, 0]>;
 
@@ -28,8 +29,8 @@ type BinaryToDecimal<T extends string, U extends any[] = Split<T>, S extends any
     infer F,
     ...infer R
 ]
-    ? BinaryToDecimal<T, R, [...S, ...(F extends '1' ? Degree<R['length']> : [])]>
-    : S['length'];
+    ? BinaryToDecimal<T, R, [...S, ...(F extends '1' ? Degree<Length<R>> : [])]>
+    : Length<S>;
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils';

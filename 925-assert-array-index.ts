@@ -103,6 +103,8 @@
 
 import type { RemoveIndexSignature } from './1367-remove-index-signature';
 import type { IsTuple } from './4484-is-tuple';
+import type { ToNumber } from './300-string-to-number';
+import type { Length } from './18-length-of-tuple';
 
 type Alphabet = 'abcdefghijklmnopqrstuvwxyz';
 
@@ -110,15 +112,13 @@ type CharMap<
     T extends object = {},
     U extends string = Alphabet,
     S extends any[] = [0]
-> = U extends `${infer F}${infer R}` ? CharMap<T & Record<F, S['length']>, R, [...S, 0]> : T;
+> = U extends `${infer F}${infer R}` ? CharMap<T & Record<F, Length<S>>, R, [...S, 0]> : T;
 
 type DecodeKey<T extends string, U extends string = ''> = T extends `${infer F}${infer R}`
     ? F extends keyof CharMap
         ? DecodeKey<R, `${U}${CharMap[F]}`>
         : never
-    : U extends `${infer K extends number}`
-    ? K
-    : never;
+    : ToNumber<U>;
 
 function assertArrayIndex<T extends readonly any[], U extends string>(
     array: T & (IsTuple<T> extends true ? never : T),

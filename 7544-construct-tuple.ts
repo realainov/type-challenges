@@ -2,23 +2,25 @@
   7544 - Construct Tuple
   -------
   by Lo (@LoTwT) #medium #tuple
-  
+
   ### Question
-  
+
   Construct a tuple with a given length.
-  
+
   For example
-  
+
   ```ts
   type result = ConstructTuple<2> // expect to be [unknown, unkonwn]
   ```
-  
+
   > View on GitHub: https://tsch.js.org/7544
 */
 
 /* _____________ Your Code Here _____________ */
 
-type ConstructTuple<L extends number, U extends unknown[] = []> = U['length'] extends L
+import type { Length } from './18-length-of-tuple';
+
+type ConstructTuple<L extends number, U extends unknown[] = []> = Length<U> extends L
     ? U
     : ConstructTuple<L, [...U, unknown]>;
 

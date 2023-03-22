@@ -24,16 +24,16 @@
 import type { Join } from './5310-join';
 import type { Split } from './2822-split';
 import type { Range } from './2257-minus-one';
-
-export type Digit = string | number | bigint;
+import type { NumberLike } from './2257-minus-one';
+import type { Length } from './18-length-of-tuple';
 
 export type Addition<T extends any[], U extends any[] = []> = T extends [infer F, ...infer R]
-    ? R extends Digit[]
-        ? Addition<R, [...U, ...Range<F & Digit>]>
+    ? R extends NumberLike[]
+        ? Addition<R, [...U, ...Range<F & NumberLike>]>
         : never
-    : Split<U['length']>;
+    : Split<Length<U>>;
 
-type _StepSum<S extends any[], T extends any[], R> = S['length'] extends 0
+type _StepSum<S extends any[], T extends any[], R> = Length<S> extends 0
     ? R extends '0'
         ? T
         : [R, ...T]
@@ -52,7 +52,7 @@ export type StepSum<S1 extends any[], S2 extends any[], T extends any[] = [], R 
         : _StepSum<S1, T, R>
     : _StepSum<S2, T, R>;
 
-type Sum<D1 extends Digit, D2 extends Digit> = Join<StepSum<Split<D1>, Split<D2>>>;
+type Sum<D1 extends NumberLike, D2 extends NumberLike> = Join<StepSum<Split<D1>, Split<D2>>>;
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils';

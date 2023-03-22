@@ -2,34 +2,36 @@
   17 - Currying 1
   -------
   by Anthony Fu (@antfu) #hard #array
-  
+
   ### Question
-  
+
   > TypeScript 4.0 is recommended in this challenge
-  
-  [Currying](https://en.wikipedia.org/wiki/Currying) is the technique of converting a function that takes multiple arguments into a sequence of functions that each take a single argument. 
-  
+
+  [Currying](https://en.wikipedia.org/wiki/Currying) is the technique of converting a function that takes multiple arguments into a sequence of functions that each take a single argument.
+
   For example:
-  
+
   ```ts
   const add = (a: number, b: number) => a + b
   const three = add(1, 2)
-  
+
   const curriedAdd = Currying(add)
   const five = curriedAdd(2)(3)
   ```
-  
+
   The function passed to `Currying` may have multiple arguments, you need to correctly type it.
-  
+
   In this challenge, the curried function only accept one argument at a time. Once all the argument is assigned, it should return its result.
-  
+
   > View on GitHub: https://tsch.js.org/17
 */
 
 /* _____________ Your Code Here _____________ */
 
+import type { Length } from './18-length-of-tuple';
+
 type CurriedFunction<T extends Function> = T extends (...args: infer P) => infer R
-    ? P['length'] extends 0 | 1
+    ? Length<P> extends 0 | 1
         ? T
         : P extends [infer PF, ...infer PR]
         ? (arg: PF) => CurriedFunction<(...args: PR) => R>

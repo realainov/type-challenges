@@ -2,21 +2,17 @@
   300 - String to Number
   -------
   by Pig Fang (@g-plane) #hard #template-literal
-  
+
   ### Question
-  
+
   Convert a string literal to a number, which behaves like `Number.parseInt`.
-  
+
   > View on GitHub: https://tsch.js.org/300
 */
 
 /* _____________ Your Code Here _____________ */
 
-type ToNumber<T extends string, U extends number[] = []> = T extends `${number}`
-    ? `${U['length']}` extends T
-        ? U['length']
-        : ToNumber<T, [...U, 0]>
-    : never;
+export type ToNumber<T extends string> = T extends `${infer U extends number}` ? U : never;
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils';

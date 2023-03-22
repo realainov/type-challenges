@@ -13,8 +13,9 @@
 /* _____________ Your Code Here _____________ */
 
 import type { Range } from './2257-minus-one';
+import type { Length } from './18-length-of-tuple';
 
-type Sum<T extends number, U extends number> = [...Range<T>, ...Range<U>]['length'];
+type Sum<T extends number, U extends number> = Length<[...Range<T>, ...Range<U>]>;
 
 type CombineSum<T extends number, U extends any[], S extends number = U[number]> = S extends any
     ? Sum<T, S> | CombinationSum<U>

@@ -2,9 +2,9 @@
   472 - Tuple to Enum Object
   -------
   by Ryo Hanafusa (@softoika) #hard #tuple #template-literal
-  
+
   ### Question
-  
+
   The enum is an original syntax of TypeScript (it does not exist in JavaScript). So it is converted to like the following form as a result of transpilation:
   ```js
   let OperatingSystem;
@@ -25,14 +25,16 @@
   Enum<["macOS", "Windows", "Linux"], true>
   // -> { readonly MacOS: 0, readonly Windows: 1, readonly Linux: 2 }
   ```
-  
+
   > View on GitHub: https://tsch.js.org/472
 */
 
 /* _____________ Your Code Here _____________ */
 
+import type { Length } from './18-length-of-tuple';
+
 type MergeEnum<U extends object, F, N extends boolean, C extends number[]> = F extends string
-    ? U & Readonly<Record<Capitalize<F>, N extends true ? C['length'] : F>>
+    ? U & Readonly<Record<Capitalize<F>, N extends true ? Length<C> : F>>
     : never;
 
 type Enum<

@@ -18,9 +18,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-type DropChar<S extends string, C extends string> = S extends `${infer F}${C}${infer R}`
-    ? DropChar<`${F}${R}`, C>
-    : S;
+type DropChar<S extends string, C extends string> = S extends `${infer F}${C}${infer R}` ? DropChar<`${F}${R}`, C> : S;
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils';

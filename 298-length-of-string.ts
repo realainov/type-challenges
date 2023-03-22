@@ -2,19 +2,20 @@
   298 - Length of String
   -------
   by Pig Fang (@g-plane) #medium #template-literal
-  
+
   ### Question
-  
+
   Compute the length of a string literal, which behaves like `String#length`.
-  
+
   > View on GitHub: https://tsch.js.org/298
 */
 
 /* _____________ Your Code Here _____________ */
 
 import type { Split } from './2822-split';
+import type { Length } from './18-length-of-tuple';
 
-type LengthOfString<S extends string> = Split<S>['length'];
+type LengthOfString<S extends string> = Length<Split<S>>;
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils';

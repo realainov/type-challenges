@@ -2,28 +2,27 @@
   5317 - LastIndexOf
   -------
   by jiangshan (@jiangshanmeta) #medium #array
-  
+
   ### Question
-  
+
   Implement the type version of ```Array.lastIndexOf```, ```LastIndexOf<T, U>```  takes an Array ```T```, any ```U``` and returns the index of the last ```U``` in Array ```T```
-  
+
   For example:
-  
+
   ```typescript
   type Res1 = LastIndexOf<[1, 2, 3, 2, 1], 2> // 3
   type Res2 = LastIndexOf<[0, 0, 0], 2> // -1
   ```
-  
+
   > View on GitHub: https://tsch.js.org/5317
 */
 
 /* _____________ Your Code Here _____________ */
 
-type LastIndexOf<T extends any[], U, S extends any[] = [], N extends number = -1> = T extends [
-    infer F,
-    ...infer R
-]
-    ? LastIndexOf<R, U, [...S, F], Equal<F, U> extends true ? S['length'] : N>
+import type { Length } from './18-length-of-tuple';
+
+type LastIndexOf<T extends any[], U, S extends any[] = [], N extends number = -1> = T extends [infer F, ...infer R]
+    ? LastIndexOf<R, U, [...S, F], Equal<F, U> extends true ? Length<S> : N>
     : N;
 
 /* _____________ Test Cases _____________ */

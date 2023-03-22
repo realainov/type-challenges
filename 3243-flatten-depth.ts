@@ -2,29 +2,31 @@
   3243 - FlattenDepth
   -------
   by jiangshan (@jiangshanmeta) #medium #array
-  
+
   ### Question
-  
+
   Recursively flatten array up to depth times.
-  
+
   For example:
-  
+
   ```typescript
   type a = FlattenDepth<[1, 2, [3, 4], [[[5]]]], 2> // [1, 2, 3, 4, [5]]. flattern 2 times
   type b = FlattenDepth<[1, 2, [3, 4], [[[5]]]]> // [1, 2, 3, 4, [[5]]]. Depth defaults to be 1
   ```
-  
+
   If the depth is provided, it's guaranteed to be positive integer.
-  
+
   > View on GitHub: https://tsch.js.org/3243
 */
 
 /* _____________ Your Code Here _____________ */
 
+import type { Length } from './18-length-of-tuple';
+
 type FlattenDepth<T, C extends number = 1, D extends any[] = [], U extends any[] = []> = T extends []
     ? U
     : T extends [infer F, ...infer R]
-    ? D['length'] extends C
+    ? Length<D> extends C
         ? [...U, F, ...R]
         : FlattenDepth<R, C, D, [...U, ...FlattenDepth<F, C, [...D, 0]>]>
     : [...U, T];

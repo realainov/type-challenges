@@ -27,6 +27,7 @@
 /* _____________ Your Code Here _____________ */
 
 import type { NumberRange } from './8640-number-range';
+import type { Length } from './18-length-of-tuple';
 
 type _Fizz<T extends number> = Sum<T> extends 0 | 3 | 6 | 9 ? 'Fizz' : '';
 
@@ -34,15 +35,15 @@ type _Buzz<T extends number> = `${T}` extends `${string}${0 | 5}` ? 'Buzz' : '';
 
 type _FizzBuzz<T extends number, U = `${_Fizz<T>}${_Buzz<T>}`> = U extends '' ? `${T}` : U;
 
-type Range<T extends string | number, U extends any[] = []> = `${U['length']}` extends `${T}`
+type Range<T extends string | number, U extends any[] = []> = `${Length<U>}` extends `${T}`
     ? U
-    : Range<T, [...U, [...U, 0]['length']]>;
+    : Range<T, [...U, Length<[...U, 0]>]>;
 
 type Sum<T extends string | number, U extends any[] = []> = `${T}` extends `${infer F}${infer R}`
     ? Sum<R, [...U, ...Range<F>]>
-    : U['length'] extends NumberRange<0, 9>
-    ? U['length']
-    : Sum<U['length']>;
+    : Length<U> extends NumberRange<0, 9>
+    ? Length<U>
+    : Sum<Length<U>>;
 
 type FizzBuzz<T extends number, U extends number[] = Range<T>> = {
     [K in keyof U]: _FizzBuzz<U[K]>;

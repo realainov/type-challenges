@@ -19,13 +19,17 @@
 
 /* _____________ Your Code Here _____________ */
 
-export type Range<T extends number | string | bigint, U extends any[] = []> = 0 extends 1
-    ? never
-    : `${U['length']}` extends `${T}`
-    ? U
-    : Range<T, [...U, U['length']]>;
+import type { Length } from './18-length-of-tuple';
 
-type MinusOne<T extends number> = Range<T> extends [any, ...infer R] ? R['length'] : -1;
+export type NumberLike = number | string | bigint;
+
+export type Range<T extends NumberLike, U extends any[] = []> = 0 extends 1
+    ? never
+    : `${Length<U>}` extends `${T}`
+    ? U
+    : Range<T, [...U, Length<U>]>;
+
+type MinusOne<T extends number> = Range<T> extends [any, ...infer R] ? Length<R> : -1;
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils';

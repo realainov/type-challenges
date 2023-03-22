@@ -58,12 +58,12 @@ declare const example: {
 };
 
 type cases = [
-    ExpectTrue<ExpectExtends<Path<typeof example['foo']['bar']>, ['a']>>,
-    ExpectTrue<ExpectExtends<Path<typeof example['foo']['baz']>, ['b'] | ['c']>>,
+    ExpectTrue<ExpectExtends<Path<(typeof example)['foo']['bar']>, ['a']>>,
+    ExpectTrue<ExpectExtends<Path<(typeof example)['foo']['baz']>, ['b'] | ['c']>>,
     ExpectTrue<
-        ExpectExtends<Path<typeof example['foo']>, ['bar'] | ['baz'] | ['bar', 'a'] | ['baz', 'b'] | ['baz', 'c']>
+        ExpectExtends<Path<(typeof example)['foo']>, ['bar'] | ['baz'] | ['bar', 'a'] | ['baz', 'b'] | ['baz', 'c']>
     >,
-    ExpectFalse<ExpectExtends<Path<typeof example['foo']['bar']>, ['z']>>
+    ExpectFalse<ExpectExtends<Path<(typeof example)['foo']['bar']>, ['z']>>
 ];
 
 /* _____________ Further Steps _____________ */

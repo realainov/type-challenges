@@ -21,6 +21,7 @@
 import type { Range } from './2257-minus-one';
 import type { Split } from './2822-split';
 import type { Absolute } from './529-absolute';
+import type { Length } from './18-length-of-tuple';
 
 enum Comparison {
     Greater,
@@ -57,8 +58,8 @@ type PositiveComparison<
     U extends string | number,
     TS extends string[] = Split<T>,
     US extends string[] = Split<U>
-> = Greater<TS['length'], US['length']> extends Comparison.Greater | Comparison.Lower
-    ? Greater<TS['length'], US['length']>
+> = Greater<Length<TS>, Length<US>> extends Comparison.Greater | Comparison.Lower
+    ? Greater<Length<TS>, Length<US>>
     : StepComparisonResult<StepComparison<TS, US>>;
 
 type Comparator<T extends string | number, U extends string | number> = [true, false] extends [

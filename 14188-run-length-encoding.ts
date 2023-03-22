@@ -14,10 +14,12 @@
 /* _____________ Your Code Here _____________ */
 
 import type { Join } from './5310-join';
+import type { Length } from './18-length-of-tuple';
+import type { NumberLike } from './2257-minus-one';
 
-type EncodeSequence<T extends string[]> = `${T['length'] extends 1 ? '' : T['length']}${T[0]}`;
+type EncodeSequence<T extends string[]> = `${Length<T> extends 1 ? '' : Length<T>}${T[0]}`;
 
-type DecodeSequence<T extends string | number, U, S extends any[] = []> = `${S['length']}` extends `${T}`
+type DecodeSequence<T extends NumberLike, U, S extends any[] = []> = `${Length<S>}` extends `${T}`
     ? Join<S>
     : DecodeSequence<T, U, [...S, U]>;
 
@@ -28,7 +30,7 @@ type Sequence<T extends string, U extends string[] = []> = T extends `${infer F}
     : U;
 
 namespace RLE {
-    export type Encode<T extends string, U extends string[] = Sequence<T>> = U['length'] extends 0
+    export type Encode<T extends string, U extends string[] = Sequence<T>> = Length<U> extends 0
         ? ''
         : `${EncodeSequence<U>}${T extends `${Join<U>}${infer R}` ? Encode<R> : ''}`;
 

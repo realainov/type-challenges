@@ -41,12 +41,13 @@
 import type { Last } from './15-last-of-array';
 import type { Slice } from './216-slice';
 import type { Range } from './2257-minus-one';
+import type { Length } from './18-length-of-tuple';
 
-type _CurriedFunction<R, P extends any[], L extends number = P['length']> = L extends 1
+type _CurriedFunction<R, P extends any[], L extends number = Length<P>> = L extends 1
     ? (...args: P) => R
     : CurriedFunction<R, P, Last<Range<L>>>;
 
-type CurriedFunction<R, P extends any[], L extends number = P['length']> = _CurriedFunction<R, P, L> & {
+type CurriedFunction<R, P extends any[], L extends number = Length<P>> = _CurriedFunction<R, P, L> & {
     (...args: Slice<P, 0, L>): CurriedFunction<R, Slice<P, L>>;
 };
 
