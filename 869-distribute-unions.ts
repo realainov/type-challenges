@@ -44,7 +44,27 @@
 
 /* _____________ Your Code Here _____________ */
 
-type DistributeUnions<T> = any;
+type Normalize<T> = T extends any ? { [K in keyof T]: Normalize<T[K]> } : never;
+
+type DistributeArray<T extends any[]> = T extends [infer F, ...infer R]
+    ? DistributeUnions<F> extends infer V
+        ? V extends any
+            ? [DistributeUnions<V>, ...DistributeArray<R>]
+            : never
+        : never
+    : [];
+
+type DistributeRecord<T extends object, U extends keyof T = keyof T> = [U] extends [never]
+    ? {}
+    : U extends any
+    ? DistributeUnions<T[U]> extends infer V
+        ? V extends any
+            ? Normalize<{ [K in U]: V } & DistributeRecord<Omit<T, U>>>
+            : never
+        : never
+    : never;
+
+type DistributeUnions<T> = T extends any[] ? DistributeArray<T> : T extends object ? DistributeRecord<T> : T;
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils';

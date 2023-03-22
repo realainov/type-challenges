@@ -2,24 +2,24 @@
   2257 - MinusOne
   -------
   by Mustafo Faiz (@fayzzzm) #medium #math
-  
+
   ### Question
-  
+
   Given a number (always positive) as a type. Your type should return the number decreased by one.
-  
+
   For example:
-  
+
   ```ts
   type Zero = MinusOne<1> // 0
   type FiftyFour = MinusOne<55> // 54
   ```
-  
+
   > View on GitHub: https://tsch.js.org/2257
 */
 
 /* _____________ Your Code Here _____________ */
 
-export type Range<T extends number | string | bigint, U extends number[] = []> = 0 extends 1
+export type Range<T extends number | string | bigint, U extends any[] = []> = 0 extends 1
     ? never
     : `${U['length']}` extends `${T}`
     ? U

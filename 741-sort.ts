@@ -30,14 +30,9 @@
 
 /* _____________ Your Code Here _____________ */
 
+import { Range } from './2257-minus-one';
 import { Reverse } from './3192-reverse';
 import { UnionToTuple } from './730-union-to-tuple';
-
-export type Range<T extends number, U, S extends any[] = []> = 0 extends 1
-    ? never
-    : S['length'] extends T
-    ? S
-    : Range<T, U, [...S, U]>;
 
 type Count<T extends any[], U extends Record<number, any[]> = {}> = T extends [infer F, ...infer R]
     ? F extends keyof U
