@@ -101,7 +101,6 @@
 
 /* _____________ Your Code Here _____________ */
 
-import type { MergeInsertions } from '@type-challenges/utils';
 import type { RemoveIndexSignature } from './1367-remove-index-signature';
 import type { IsTuple } from './4484-is-tuple';
 
@@ -111,7 +110,7 @@ type CharMap<
     T extends object = {},
     U extends string = Alphabet,
     S extends any[] = [0]
-> = U extends `${infer F}${infer R}` ? CharMap<T & Record<F, S['length']>, R, [...S, 0]> : MergeInsertions<T>;
+> = U extends `${infer F}${infer R}` ? CharMap<T & Record<F, S['length']>, R, [...S, 0]> : T;
 
 type DecodeKey<T extends string, U extends string = ''> = T extends `${infer F}${infer R}`
     ? F extends keyof CharMap
