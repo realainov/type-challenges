@@ -19,11 +19,17 @@
 
 /* _____________ Your Code Here _____________ */
 
-import type { NumberRange } from './8640-number-range';
 import type { Length } from './18-length-of-tuple';
+import type { NumberRange } from './8640-number-range';
 
-type Fill<T extends any[], N, S extends number = 0, E extends number = Length<T>, R = Exclude<NumberRange<S, E>, E>> = {
-    [K in keyof T]: K extends `${R & number}` ? N : T[K];
+type Fill<
+    T extends any[],
+    N,
+    S extends number = 0,
+    E extends number = Length<T>,
+    R extends number = Exclude<NumberRange<S, E>, E>
+> = {
+    [K in keyof T]: K extends `${R}` ? N : T[K];
 };
 
 /* _____________ Test Cases _____________ */

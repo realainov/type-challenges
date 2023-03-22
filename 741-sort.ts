@@ -40,7 +40,7 @@ type Count<T extends any[], U extends Record<number, any[]> = {}> = T extends [i
         ? U[F] extends any[]
             ? Count<R, Omit<U, F> & Record<F, [...U[F], 0]>>
             : never
-        : Count<R, U & Record<F & number, [0]>>
+        : Count<R, U & Record<F, [0]>>
     : MergeInsertions<U>;
 
 type Fill<T extends any[], U extends Record<number, any[]>, S extends any[] = []> = T extends [infer F, ...infer R]

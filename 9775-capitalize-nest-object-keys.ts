@@ -15,7 +15,7 @@
 type CapitalizeNestObjectKeys<T> = T extends any[]
     ? { [K in keyof T]: CapitalizeNestObjectKeys<T[K]> }
     : T extends object
-    ? { [K in keyof T as Capitalize<K & string>]: CapitalizeNestObjectKeys<T[K]> }
+    ? { [K in keyof T & string as Capitalize<K>]: CapitalizeNestObjectKeys<T[K]> }
     : T;
 
 /* _____________ Test Cases _____________ */

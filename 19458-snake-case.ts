@@ -20,8 +20,8 @@
 
 /* _____________ Your Code Here _____________ */
 
-type SnakeCase<T extends string, U extends string = ''> = T extends `${infer F}${infer R}`
-    ? SnakeCase<R, `${U}${Equal<F, Uppercase<F & string>> extends true ? `_${Lowercase<F & string>}` : F & string}`>
+type SnakeCase<T extends string, U extends string = ''> = T extends `${infer F extends string}${infer R}`
+    ? SnakeCase<R, `${U}${Equal<F, Uppercase<F>> extends true ? `_${Lowercase<F>}` : F}`>
     : U;
 
 /* _____________ Test Cases _____________ */

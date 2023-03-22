@@ -25,11 +25,11 @@
 
 /* _____________ Your Code Here _____________ */
 
+import type { Length } from './18-length-of-tuple';
+import type { NumberLike, Range } from './2257-minus-one';
 import type { Split } from './2822-split';
 import type { Addition, StepSum } from './476-sum';
 import type { Join } from './5310-join';
-import type { Range, NumberLike } from './2257-minus-one';
-import type { Length } from './18-length-of-tuple';
 
 type Multiplication<
     D1 extends NumberLike,
@@ -40,11 +40,11 @@ type Multiplication<
 
 type _StepMultiplication<S extends any[], D extends NumberLike, T extends any[] = [], R = '0'> = S extends [
     ...infer SR,
-    infer SL
+    infer SL extends NumberLike
 ]
-    ? Addition<[Multiplication<SL & NumberLike, D>, R]> extends [infer D1, infer D2]
+    ? Addition<[Multiplication<SL, D>, R]> extends [infer D1, infer D2]
         ? _StepMultiplication<SR, D, [D2, ...T], D1>
-        : Addition<[Multiplication<SL & NumberLike, D>, R]> extends [infer D2]
+        : Addition<[Multiplication<SL, D>, R]> extends [infer D2]
         ? _StepMultiplication<SR, D, [D2, ...T]>
         : never
     : R extends '0'
@@ -53,9 +53,9 @@ type _StepMultiplication<S extends any[], D extends NumberLike, T extends any[] 
 
 type StepMultiplication<S1 extends any[], S2 extends any[], T extends any[] = [], U extends any[] = []> = S2 extends [
     ...infer S2R,
-    infer S2L
+    infer S2L extends NumberLike
 ]
-    ? StepMultiplication<S1, S2R, StepSum<[..._StepMultiplication<S1, S2L & NumberLike>, ...U], T>, [...U, 0]>
+    ? StepMultiplication<S1, S2R, StepSum<[..._StepMultiplication<S1, S2L>, ...U], T>, [...U, 0]>
     : T;
 
 type Multiply<T extends NumberLike, U extends NumberLike> = '0' extends `${T | U}`

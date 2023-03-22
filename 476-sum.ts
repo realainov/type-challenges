@@ -27,9 +27,9 @@ import type { Range } from './2257-minus-one';
 import type { NumberLike } from './2257-minus-one';
 import type { Length } from './18-length-of-tuple';
 
-export type Addition<T extends any[], U extends any[] = []> = T extends [infer F, ...infer R]
+export type Addition<T extends any[], U extends any[] = []> = T extends [infer F extends NumberLike, ...infer R]
     ? R extends NumberLike[]
-        ? Addition<R, [...U, ...Range<F & NumberLike>]>
+        ? Addition<R, [...U, ...Range<F>]>
         : never
     : Split<Length<U>>;
 

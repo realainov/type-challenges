@@ -25,15 +25,15 @@
 
 /* _____________ Your Code Here _____________ */
 
-import type { Range } from './2257-minus-one';
 import type { Length } from './18-length-of-tuple';
+import type { Range } from './2257-minus-one';
 
 type Maximum<
     T extends any[],
     U extends number[] = never,
     S extends number[] = [U] extends [never] ? [] : U
-> = T extends [infer F, ...infer R]
-    ? Maximum<R, Range<F & number> extends [...S, ...any[]] ? Range<F & number> : U>
+> = T extends [infer F extends number, ...infer R]
+    ? Maximum<R, Range<F> extends [...S, ...any[]] ? Range<F> : U>
     : Length<U>;
 
 /* _____________ Test Cases _____________ */

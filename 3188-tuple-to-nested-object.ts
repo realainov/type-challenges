@@ -2,25 +2,25 @@
   3188 - Tuple to Nested Object
   -------
   by jiangshan (@jiangshanmeta) #medium #object #tuple
-  
+
   ### Question
-  
+
   Given a tuple type ```T``` that only contains string type, and a type ```U```, build an object recursively.
-  
+
   ```typescript
   type a = TupleToNestedObject<['a'], string> // {a: string}
   type b = TupleToNestedObject<['a', 'b'], number> // {a: {b: number}}
   type c = TupleToNestedObject<[], boolean> // boolean. if the tuple is empty, just return the U type
   ```
-  
+
   > View on GitHub: https://tsch.js.org/3188
 */
 
 /* _____________ Your Code Here _____________ */
 
-type TupleToNestedObject<T extends string[], U> = T extends [...infer R, infer L]
+type TupleToNestedObject<T extends string[], U> = T extends [...infer R, infer L extends string]
     ? R extends string[]
-        ? TupleToNestedObject<R, MergeInsertions<Record<L & string, U>>>
+        ? TupleToNestedObject<R, MergeInsertions<Record<L, U>>>
         : never
     : U;
 
