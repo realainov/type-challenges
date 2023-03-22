@@ -47,7 +47,7 @@
 type DistributeArray<T extends any[]> = T extends [infer F, ...infer R]
     ? DistributeUnions<F> extends infer V
         ? V extends any
-            ? [DistributeUnions<V>, ...DistributeArray<R>]
+            ? [V, ...DistributeArray<R>]
             : never
         : never
     : [];
