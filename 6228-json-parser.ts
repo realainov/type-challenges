@@ -27,8 +27,11 @@ type BraceMap = { '{': '}'; '[': ']' };
 
 type Interpolations = [['\\r', '\r'], ['\\n', '\n'], ['\\b', '\b'], ['\\f', '\f']];
 
-type ReplaceInterpolation<T extends string, U = Interpolations> = U extends [[infer S, infer E], ...infer R]
-    ? ReplaceInterpolation<ReplaceAll<T, S & string, E & string>, R>
+type ReplaceInterpolation<T extends string, U extends Partial<Interpolations> = Interpolations> = U extends [
+    ...infer R extends Partial<Interpolations>,
+    [infer S extends string, infer E extends string]
+]
+    ? ReplaceInterpolation<ReplaceAll<T, S, E>, R>
     : T;
 
 type FindValue<T extends string, U extends string = Trim<T>> = U extends `${keyof ValueMap}${infer R}`
@@ -41,7 +44,7 @@ type FindObject<
     T extends string,
     B extends string = First<T>,
     U extends string = '',
-    S extends any[] = []
+    S extends 0[] = []
 > = B extends keyof BraceMap
     ? [U, S] extends ['', []] | [string, [any, ...any[]]]
         ? T extends `${infer F}${infer R}`
@@ -54,10 +57,10 @@ type ParseObjectValues<T extends string, U extends [any, any] = never> = FindVal
     infer K extends `"${string}"`,
     `: ${infer R}`
 ]
-    ? FindValue<R> extends [infer V, `,${infer L}`]
-        ? ParseObjectValues<L, U | [Parse<K & string>, Parse<V & string>]>
-        : FindValue<R> extends [infer V, '']
-        ? ObjectFromEntries<U | [Parse<K & string>, Parse<V & string>]>
+    ? FindValue<R> extends [infer V extends string, `,${infer L}`]
+        ? ParseObjectValues<L, U | [Parse<K>, Parse<V>]>
+        : FindValue<R> extends [infer V extends string, '']
+        ? ObjectFromEntries<U | [Parse<K>, Parse<V>]>
         : never
     : never;
 
@@ -67,10 +70,13 @@ type ParseObject<T extends string> = Trim<T> extends `{${infer M}}`
         : ParseObjectValues<Trim<M>>
     : never;
 
-type ParseArrayValues<T extends string, U extends any[] = []> = FindValue<T> extends [infer V, `, ${infer R}`]
-    ? ParseArrayValues<R, [...U, Parse<V & string>]>
-    : FindValue<T> extends [infer V, '']
-    ? [...U, Parse<V & string>]
+type ParseArrayValues<T extends string, U extends any[] = []> = FindValue<T> extends [
+    infer V extends string,
+    `, ${infer R}`
+]
+    ? ParseArrayValues<R, [...U, Parse<V>]>
+    : FindValue<T> extends [infer V extends string, '']
+    ? [...U, Parse<V>]
     : never;
 
 type ParseArray<T extends string> = Trim<T> extends `[${infer M}]`

@@ -26,7 +26,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-export type ObjectFromEntries<T extends [any, any]> = MergeInsertions<
+export type ObjectFromEntries<T extends [string, any]> = MergeInsertions<
     UnionToIntersection<T extends any ? Record<T[0], T[1]> : never>
 >;
 

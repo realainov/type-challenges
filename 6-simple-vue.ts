@@ -48,7 +48,9 @@
 
 import type { MyReturnType } from './2-get-return-type';
 
-export type ComputedThis<C extends Record<string, Function>> = { [K in keyof C]: MyReturnType<C[K]> };
+export type ComputedThis<C extends Record<string, Function>> = {
+    [K in keyof C]: MyReturnType<C[K]>;
+};
 
 declare function SimpleVue<
     D extends Record<string, any> = {},
