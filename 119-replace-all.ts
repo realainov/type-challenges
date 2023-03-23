@@ -2,23 +2,23 @@
   119 - ReplaceAll
   -------
   by Anthony Fu (@antfu) #medium #template-literal
-  
+
   ### Question
-  
+
   Implement `ReplaceAll<S, From, To>` which replace the all the substring `From` with `To` in the given string `S`
-  
+
   For example
-  
+
   ```ts
   type replaced = ReplaceAll<'t y p e s', ' ', ''> // expected to be 'types'
   ```
-  
+
   > View on GitHub: https://tsch.js.org/119
 */
 
 /* _____________ Your Code Here _____________ */
 
-type ReplaceAll<T extends string, S extends string, E extends string> = T extends `${infer F}${S extends ''
+export type ReplaceAll<T extends string, S extends string, E extends string> = T extends `${infer F}${S extends ''
     ? never
     : S}${infer R}`
     ? `${ReplaceAll<F, S, E>}${E}${ReplaceAll<R, S, E>}`

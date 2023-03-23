@@ -43,10 +43,7 @@ type Count<T extends any[], U extends Record<number, any[]> = {}> = T extends [i
         : Count<R, U & Record<F, [0]>>
     : MergeInsertions<U>;
 
-type Fill<T extends any[], U extends Record<number, any[]>, S extends any[] = []> = T extends [
-    infer F extends keyof U,
-    ...infer R
-]
+type Fill<T extends any[], U extends Record<number, any[]>, S extends any[] = []> = T extends [infer F, ...infer R]
     ? U[F] extends any[]
         ? Fill<R, U, [...S, ...Range<Length<U[F]>, F>]>
         : never

@@ -18,7 +18,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-import type { Range } from './2257-minus-one';
+import type { Range, NumberLike } from './2257-minus-one';
 import type { Split } from './2822-split';
 import type { Absolute } from './529-absolute';
 import type { Length } from './18-length-of-tuple';
@@ -29,9 +29,9 @@ enum Comparison {
     Lower,
 }
 
-type IsNegative<T extends string | number> = `${T}` extends `-${number}` ? true : false;
+type IsNegative<T extends NumberLike> = `${T}` extends `-${number}` ? true : false;
 
-type Greater<T extends string | number, U extends string | number> = Equal<T, U> extends true
+type Greater<T extends NumberLike, U extends NumberLike> = Equal<T, U> extends true
     ? Comparison.Equal
     : Range<T> extends [...Range<U>, ...infer R]
     ? R extends []
@@ -54,18 +54,15 @@ type StepComparisonResult<T extends Comparison[]> = T extends [infer F, ...infer
     : Comparison.Equal;
 
 type PositiveComparison<
-    T extends string | number,
-    U extends string | number,
+    T extends NumberLike,
+    U extends NumberLike,
     TS extends string[] = Split<T>,
     US extends string[] = Split<U>
 > = Greater<Length<TS>, Length<US>> extends Comparison.Greater | Comparison.Lower
     ? Greater<Length<TS>, Length<US>>
     : StepComparisonResult<StepComparison<TS, US>>;
 
-type Comparator<T extends string | number, U extends string | number> = [true, false] extends [
-    IsNegative<T>,
-    IsNegative<U>
-]
+type Comparator<T extends NumberLike, U extends NumberLike> = [true, false] extends [IsNegative<T>, IsNegative<U>]
     ? Comparison.Lower
     : [false, true] extends [IsNegative<T>, IsNegative<U>]
     ? Comparison.Greater

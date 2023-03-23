@@ -21,17 +21,13 @@
 
 /* _____________ Your Code Here _____________ */
 
-import type { Join } from './5310-join';
-import type { Split } from './2822-split';
-import type { Range } from './2257-minus-one';
-import type { NumberLike } from './2257-minus-one';
 import type { Length } from './18-length-of-tuple';
+import type { NumberLike, Range } from './2257-minus-one';
+import type { Split } from './2822-split';
+import type { Join } from './5310-join';
 
-export type Addition<T extends any[], U extends any[] = []> = T extends [
-    infer F extends NumberLike,
-    ...infer R extends NumberLike[]
-]
-    ? Addition<R, [...U, ...Range<F>]>
+export type Addition<T extends any[], U extends any[] = []> = T extends [infer F, ...infer R]
+    ? Addition<R, [...U, ...Range<F & NumberLike>]>
     : Split<Length<U>>;
 
 type _StepSum<S extends any[], T extends any[], R> = Length<S> extends 0
