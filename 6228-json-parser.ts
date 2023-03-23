@@ -34,7 +34,7 @@ type ReplaceInterpolation<T extends string, U = Interpolations> = U extends [[in
 type FindValue<T extends string, U extends string = Trim<T>> = U extends `${keyof ValueMap}${infer R}`
     ? [U extends `${infer F}${R}` ? F : never, R]
     : U extends `"${infer F}"${infer R}`
-    ? [F, R]
+    ? [`"${F}"`, R]
     : FindObject<U>;
 
 type FindObject<
@@ -50,11 +50,14 @@ type FindObject<
         : [U, T]
     : [never];
 
-type ParseObjectValues<T extends string, U extends [any, any] = never> = FindValue<T> extends [infer K, `: ${infer R}`]
+type ParseObjectValues<T extends string, U extends [any, any] = never> = FindValue<T> extends [
+    infer K extends `"${string}"`,
+    `: ${infer R}`
+]
     ? FindValue<R> extends [infer V, `,${infer L}`]
-        ? ParseObjectValues<L, U | [ReplaceInterpolation<K & string>, Parse<V & string>]>
+        ? ParseObjectValues<L, U | [Parse<K & string>, Parse<V & string>]>
         : FindValue<R> extends [infer V, '']
-        ? ObjectFromEntries<U | [ReplaceInterpolation<K & string>, Parse<V & string>]>
+        ? ObjectFromEntries<U | [Parse<K & string>, Parse<V & string>]>
         : never
     : never;
 
@@ -82,7 +85,9 @@ type Parse<T extends string, U extends string = Trim<T>> = U extends keyof Value
     ? ParseArray<U>
     : U extends `{${string}}`
     ? ParseObject<U>
-    : ReplaceInterpolation<U>;
+    : U extends `"${infer M}"`
+    ? ReplaceInterpolation<M>
+    : never;
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils';
