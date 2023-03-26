@@ -35,27 +35,25 @@ import type { UnionToTuple } from '@hard/730 - Union to Tuple';
 import type { Range } from '@medium/2257 - MinusOne';
 import type { Reverse } from '@medium/3192 - Reverse';
 
-type Count<T extends any[], U extends Record<number, any[]> = {}> = T extends [infer F, ...infer R]
-    ? F extends keyof U
-        ? U[F] extends any[]
-            ? Count<R, Omit<U, F> & Record<F, [...U[F], 0]>>
-            : never
-        : Count<R, U & Record<F, [0]>>
+export type Count<T extends PropertyKey[], U extends Record<PropertyKey, 0[]> = {}> = T extends [
+    infer F extends PropertyKey,
+    ...infer R extends PropertyKey[]
+]
+    ? Count<R, Omit<U, F> & Record<F, F extends keyof U ? [...U[F], 0] : [0]>>
     : MergeInsertions<U>;
 
-type Fill<T extends any[], U extends Record<number, any[]>, S extends any[] = []> = T extends [infer F, ...infer R]
-    ? U[F] extends any[]
-        ? Fill<R, U, [...S, ...Range<Length<U[F]>, F>]>
-        : never
+type Fill<T extends any[], U extends Record<PropertyKey, 0[]>, S extends any[] = []> = T extends [
+    infer F extends keyof U,
+    ...infer R
+]
+    ? Fill<R, U, [...S, ...Range<U[F] extends 0[] ? Length<U[F]> : 0, [], F>]>
     : S;
 
 type UniqSort<T extends number[], U extends boolean = false> = U extends false
     ? Reverse<UnionToTuple<T[number]>>
     : UnionToTuple<T[number]>;
 
-type Sort<T extends number[], U extends boolean = false, S extends any[] = Fill<UniqSort<T>, Count<T>>> = U extends true
-    ? Reverse<S>
-    : S;
+type Sort<T extends number[], U extends boolean = false> = Fill<UniqSort<T, U>, Count<T>>;
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect, MergeInsertions } from '@type-challenges/utils';

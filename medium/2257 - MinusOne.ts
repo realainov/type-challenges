@@ -23,11 +23,11 @@ import type { Length } from '@easy/18 - Length of Tuple';
 
 export type NumberLike = number | string | bigint;
 
-export type Range<T extends NumberLike, U extends any[] = []> = 0 extends 1
+export type Range<T extends NumberLike, U extends any[] = [], S = Length<U>> = 0 extends 1
     ? never
     : `${Length<U>}` extends `${T}`
     ? U
-    : Range<T, [...U, Length<U>]>;
+    : Range<T, [...U, S], S>;
 
 type MinusOne<T extends number> = Range<T> extends [any, ...infer R] ? Length<R> : -1;
 

@@ -49,7 +49,7 @@ export type StepSum<S1 extends any[], S2 extends any[], T extends any[] = [], R 
         : _StepSum<S1, T, R>
     : _StepSum<S2, T, R>;
 
-type Sum<D1 extends NumberLike, D2 extends NumberLike> = Join<StepSum<Split<D1>, Split<D2>>>;
+export type Sum<D1 extends NumberLike, D2 extends NumberLike> = Join<StepSum<Split<D1>, Split<D2>>>;
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils';
