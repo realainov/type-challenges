@@ -35,32 +35,28 @@ type Multiplication<
     D1 extends NumberLike,
     D2 extends NumberLike,
     T extends any[] = [],
-    S extends any[] = []
+    S extends 0[] = []
 > = `${Length<S>}` extends `${D2}` ? Length<T> : Multiplication<D1, D2, [...T, ...Range<D1>], [...S, 0]>;
 
-type _StepMultiplication<S extends any[], D extends NumberLike, T extends any[] = [], R = '0'> = S extends [
+type _ColumnMultiplication<S extends any[], D extends NumberLike, T extends any[] = [], R = '0'> = S extends [
     ...infer SR,
     infer SL extends NumberLike
 ]
-    ? Addition<[Multiplication<SL, D>, R]> extends [infer D1, infer D2]
-        ? _StepMultiplication<SR, D, [D2, ...T], D1>
-        : Addition<[Multiplication<SL, D>, R]> extends [infer D2]
-        ? _StepMultiplication<SR, D, [D2, ...T]>
+    ? Addition<[Multiplication<SL, D>, R]> extends [infer D1, infer D2] | [infer D2]
+        ? _ColumnMultiplication<SR, D, [D2, ...T], unknown extends D1 ? '0' : D1>
         : never
-    : R extends '0'
-    ? T
-    : [R, ...T];
+    : [...(R extends '0' ? [] : [R]), ...T];
 
-type StepMultiplication<S1 extends any[], S2 extends any[], T extends any[] = [], U extends any[] = []> = S2 extends [
+type ColumnMultiplication<S1 extends any[], S2 extends any[], T extends any[] = [], U extends any[] = []> = S2 extends [
     ...infer S2R,
     infer S2L extends NumberLike
 ]
-    ? StepMultiplication<S1, S2R, ColumnAddition<[..._StepMultiplication<S1, S2L>, ...U], T>, [...U, 0]>
+    ? ColumnMultiplication<S1, S2R, ColumnAddition<[..._ColumnMultiplication<S1, S2L>, ...U], T>, [...U, 0]>
     : T;
 
 type Multiply<T extends NumberLike, U extends NumberLike> = '0' extends `${T | U}`
     ? '0'
-    : Join<StepMultiplication<Split<T>, Split<U>>>;
+    : Join<ColumnMultiplication<Split<T>, Split<U>>>;
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils';
