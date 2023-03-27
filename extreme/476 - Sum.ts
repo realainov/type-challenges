@@ -26,8 +26,8 @@ import type { NumberLike, Range } from '@medium/2257 - MinusOne';
 import type { Split } from '@hard/2822 - Split';
 import type { Join } from '@medium/5310 - Join';
 
-export type Addition<T extends any[], U extends any[] = []> = T extends [infer F, ...infer R]
-    ? Addition<R, [...U, ...Range<F & NumberLike>]>
+export type Addition<T extends any[], U extends any[] = []> = T extends [infer F extends NumberLike, ...infer R]
+    ? Addition<R, [...U, ...Range<F>]>
     : Split<Length<U>>;
 
 type _StepSum<S extends any[], T extends any[], R> = Length<S> extends 0

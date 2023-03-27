@@ -5,19 +5,19 @@
 
   ### Question
 
-  Find the elements in the target array that appear only once. For example：input: `[1,2,2,3,3,4,5,6,6,6]`，ouput: `[1,4,5]`.
+  Find the elements in the target array that appear only once. For example：input: `[1,2,2,3,3,4,5,6,6,6]`，output: `[1,4,5]`.
 
   > View on GitHub: https://tsch.js.org/9898
 */
 
 /* _____________ Your Code Here _____________ */
 
-import type { Count } from '@extreme/741 - Sort';
 import type { FilterOut } from '@hard/399 - Tuple Filter';
 import type { Length } from '@easy/18 - Length of Tuple';
+import type { Filter } from '@medium/18220 - Filter';
 
-type FindEles<T extends any[], U extends Record<PropertyKey, 0[]> = Count<T>> = FilterOut<
-    { [K in keyof T]: Length<U[T[K]]> extends 1 ? T[K] : never },
+type FindElements<T extends number[]> = FilterOut<
+    { [K in keyof T]: Length<Filter<T, T[K]>> extends 1 ? T[K] : never },
     never
 >;
 
@@ -25,9 +25,9 @@ type FindEles<T extends any[], U extends Record<PropertyKey, 0[]> = Count<T>> = 
 import type { Equal, Expect } from '@type-challenges/utils';
 
 type cases = [
-    Expect<Equal<FindEles<[1, 2, 2, 3, 3, 4, 5, 6, 6, 6]>, [1, 4, 5]>>,
-    Expect<Equal<FindEles<[2, 2, 3, 3, 6, 6, 6]>, []>>,
-    Expect<Equal<FindEles<[1, 2, 3]>, [1, 2, 3]>>
+    Expect<Equal<FindElements<[1, 2, 2, 3, 3, 4, 5, 6, 6, 6]>, [1, 4, 5]>>,
+    Expect<Equal<FindElements<[2, 2, 3, 3, 6, 6, 6]>, []>>,
+    Expect<Equal<FindElements<[1, 2, 3]>, [1, 2, 3]>>
 ];
 
 /* _____________ Further Steps _____________ */

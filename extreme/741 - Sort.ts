@@ -30,33 +30,19 @@
 
 /* _____________ Your Code Here _____________ */
 
-import type { Length } from '@easy/18 - Length of Tuple';
 import type { UnionToTuple } from '@hard/730 - Union to Tuple';
-import type { Range } from '@medium/2257 - MinusOne';
+import type { Filter } from '@medium/18220 - Filter';
 import type { Reverse } from '@medium/3192 - Reverse';
+import type { Flatten } from '@medium/459 - Flatten';
 
-export type Count<T extends PropertyKey[], U extends Record<PropertyKey, 0[]> = {}> = T extends [
-    infer F extends PropertyKey,
-    ...infer R extends PropertyKey[]
-]
-    ? Count<R, Omit<U, F> & Record<F, F extends keyof U ? [...U[F], 0] : [0]>>
-    : MergeInsertions<U>;
+type SortDesc<T extends number[], U extends any[] = UnionToTuple<T[number]>> = Flatten<{
+    [K in keyof U]: Filter<T, U[K]>;
+}>;
 
-type Fill<T extends any[], U extends Record<PropertyKey, 0[]>, S extends any[] = []> = T extends [
-    infer F extends keyof U,
-    ...infer R
-]
-    ? Fill<R, U, [...S, ...Range<U[F] extends 0[] ? Length<U[F]> : 0, [], F>]>
-    : S;
-
-type UniqSort<T extends number[], U extends boolean = false> = U extends false
-    ? Reverse<UnionToTuple<T[number]>>
-    : UnionToTuple<T[number]>;
-
-type Sort<T extends number[], U extends boolean = false> = Fill<UniqSort<T, U>, Count<T>>;
+type Sort<T extends number[], U extends boolean = false> = U extends true ? SortDesc<T> : Reverse<SortDesc<T>>;
 
 /* _____________ Test Cases _____________ */
-import type { Equal, Expect, MergeInsertions } from '@type-challenges/utils';
+import type { Equal, Expect } from '@type-challenges/utils';
 
 type cases = [
     Expect<Equal<Sort<[]>, []>>,

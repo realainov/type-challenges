@@ -12,7 +12,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-type Filter<T extends any[], U, S extends any[] = []> = T extends [infer F, ...infer R]
+export type Filter<T extends any[], U, S extends any[] = []> = T extends [infer F, ...infer R]
     ? Filter<R, U, F extends U ? [...S, F] : S>
     : S;
 

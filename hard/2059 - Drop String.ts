@@ -20,12 +20,9 @@
 
 import type { Split } from './2822 - Split';
 import type { Join } from '@medium/5310 - Join';
+import type { FilterOut } from '@hard/399 - Tuple Filter';
 
-type Filter<T extends any[], U, S extends any[] = []> = T extends [infer F, ...infer R]
-    ? Filter<R, U, F extends U ? S : [...S, F]>
-    : S;
-
-type DropString<T extends string, U extends string, S extends any[] = Split<U>> = Join<Filter<Split<T>, S[number]>>;
+type DropString<T extends string, U extends string> = Join<FilterOut<Split<T>, Split<U>[number]>>;
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils';
