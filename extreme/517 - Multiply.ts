@@ -38,12 +38,12 @@ type Multiplication<
     S extends 0[] = []
 > = `${Length<S>}` extends `${D2}` ? Length<T> : Multiplication<D1, D2, [...T, ...Range<D1>], [...S, 0]>;
 
-type _ColumnMultiplication<S extends any[], D extends NumberLike, T extends any[] = [], R = '0'> = S extends [
+type RowMultiplication<S extends any[], D extends NumberLike, T extends any[] = [], R = '0'> = S extends [
     ...infer SR,
     infer SL extends NumberLike
 ]
     ? Addition<[Multiplication<SL, D>, R]> extends [infer D1, infer D2] | [infer D2]
-        ? _ColumnMultiplication<SR, D, [D2, ...T], unknown extends D1 ? '0' : D1>
+        ? RowMultiplication<SR, D, [D2, ...T], unknown extends D1 ? '0' : D1>
         : never
     : [...(R extends '0' ? [] : [R]), ...T];
 
@@ -51,7 +51,7 @@ type ColumnMultiplication<S1 extends any[], S2 extends any[], T extends any[] = 
     ...infer S2R,
     infer S2L extends NumberLike
 ]
-    ? ColumnMultiplication<S1, S2R, ColumnAddition<[..._ColumnMultiplication<S1, S2L>, ...U], T>, [...U, 0]>
+    ? ColumnMultiplication<S1, S2R, ColumnAddition<[...RowMultiplication<S1, S2L>, ...U], T>, [...U, 0]>
     : T;
 
 type Multiply<T extends NumberLike, U extends NumberLike> = '0' extends `${T | U}`
