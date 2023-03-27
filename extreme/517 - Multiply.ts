@@ -28,7 +28,7 @@
 import type { Length } from '@easy/18 - Length of Tuple';
 import type { NumberLike, Range } from '@medium/2257 - MinusOne';
 import type { Split } from '@hard/2822 - Split';
-import type { Addition, StepSum } from './476 - Sum';
+import type { Addition, ColumnAddition } from './476 - Sum';
 import type { Join } from '@medium/5310 - Join';
 
 type Multiplication<
@@ -55,7 +55,7 @@ type StepMultiplication<S1 extends any[], S2 extends any[], T extends any[] = []
     ...infer S2R,
     infer S2L extends NumberLike
 ]
-    ? StepMultiplication<S1, S2R, StepSum<[..._StepMultiplication<S1, S2L>, ...U], T>, [...U, 0]>
+    ? StepMultiplication<S1, S2R, ColumnAddition<[..._StepMultiplication<S1, S2L>, ...U], T>, [...U, 0]>
     : T;
 
 type Multiply<T extends NumberLike, U extends NumberLike> = '0' extends `${T | U}`

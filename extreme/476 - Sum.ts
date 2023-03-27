@@ -22,34 +22,26 @@
 /* _____________ Your Code Here _____________ */
 
 import type { Length } from '@easy/18 - Length of Tuple';
-import type { NumberLike, Range } from '@medium/2257 - MinusOne';
 import type { Split } from '@hard/2822 - Split';
+import type { NumberLike, Range } from '@medium/2257 - MinusOne';
 import type { Join } from '@medium/5310 - Join';
 
 export type Addition<T extends any[], U extends any[] = []> = T extends [infer F extends NumberLike, ...infer R]
     ? Addition<R, [...U, ...Range<F>]>
     : Split<Length<U>>;
 
-type _StepSum<S extends any[], T extends any[], R> = Length<S> extends 0
-    ? R extends '0'
-        ? T
-        : [R, ...T]
-    : [...StepSum<S, [R]>, ...T];
+type RestAddition<S extends any[], R> = R extends '0' ? S : ColumnAddition<S, [R]>;
 
-export type StepSum<S1 extends any[], S2 extends any[], T extends any[] = [], R = '0'> = S1 extends [
-    ...infer S1R,
-    infer S1L
+export type ColumnAddition<S1 extends any[], S2 extends any[], T extends any[] = [], R = '0'> = [S1, S2] extends [
+    [...infer S1R, infer S1L],
+    [...infer S2R, infer S2L]
 ]
-    ? S2 extends [...infer S2R, infer S2L]
-        ? Addition<[S1L, S2L, R]> extends [infer D1, infer D2]
-            ? StepSum<S1R, S2R, [D2, ...T], D1>
-            : Addition<[S1L, S2L, R]> extends [infer D2]
-            ? StepSum<S1R, S2R, [D2, ...T]>
-            : never
-        : _StepSum<S1, T, R>
-    : _StepSum<S2, T, R>;
+    ? Addition<[S1L, S2L, R]> extends [infer D1, infer D2] | [infer D2]
+        ? ColumnAddition<S1R, S2R, [D2, ...T], unknown extends D1 ? '0' : D1>
+        : never
+    : [...RestAddition<[...S1, ...S2], R>, ...T];
 
-export type Sum<D1 extends NumberLike, D2 extends NumberLike> = Join<StepSum<Split<D1>, Split<D2>>>;
+export type Sum<D1 extends NumberLike, D2 extends NumberLike> = Join<ColumnAddition<Split<D1>, Split<D2>>>;
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils';
