@@ -30,16 +30,20 @@ export type Addition<T extends any[], U extends any[] = []> = T extends [infer F
     ? Addition<R, [...U, ...Range<F>]>
     : Split<Length<U>>;
 
-type RestAddition<S extends any[], R> = R extends '0' ? S : ColumnAddition<S, [R]>;
+type RestAddition<S extends any[], T extends any[], R> = R extends '0'
+    ? [...S, ...T]
+    : [...ColumnAddition<S, [R]>, ...T];
 
-export type ColumnAddition<S1 extends any[], S2 extends any[], T extends any[] = [], R = '0'> = [S1, S2] extends [
-    [...infer S1R, infer S1L],
-    [...infer S2R, infer S2L]
+export type ColumnAddition<S1 extends any[], S2 extends any[], T extends any[] = [], R = '0'> = S1 extends [
+    ...infer S1R,
+    infer S1L
 ]
-    ? Addition<[S1L, S2L, R]> extends [infer D1, infer D2] | [infer D2]
-        ? ColumnAddition<S1R, S2R, [D2, ...T], unknown extends D1 ? '0' : D1>
-        : never
-    : [...RestAddition<[...S1, ...S2], R>, ...T];
+    ? S2 extends [...infer S2R, infer S2L]
+        ? Addition<[S1L, S2L, R]> extends [infer D1, infer D2] | [infer D2]
+            ? ColumnAddition<S1R, S2R, [D2, ...T], unknown extends D1 ? '0' : D1>
+            : never
+        : RestAddition<S1, T, R>
+    : RestAddition<S2, T, R>;
 
 export type Sum<D1 extends NumberLike, D2 extends NumberLike> = Join<ColumnAddition<Split<D1>, Split<D2>>>;
 

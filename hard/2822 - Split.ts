@@ -18,9 +18,9 @@
 
 /* _____________ Your Code Here _____________ */
 
-import type { NumberLike } from '@medium/2257 - MinusOne';
+export type StringLike = string | number | bigint | boolean | null | undefined;
 
-export type Split<T extends NumberLike, U extends string = ''> = string extends T
+export type Split<T extends StringLike, U extends StringLike = ''> = string extends T
     ? string[]
     : T extends any
     ? `${T}` extends `${infer A}${U}${infer B}`

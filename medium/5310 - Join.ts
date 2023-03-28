@@ -19,7 +19,9 @@
 
 /* _____________ Your Code Here _____________ */
 
-export type Join<T extends any[], U extends string | number = ''> = T extends [infer F extends string, ...infer R]
+import type { StringLike } from '@hard/2822 - Split';
+
+export type Join<T extends any[], U extends StringLike = ''> = T extends [infer F extends StringLike, ...infer R]
     ? R extends []
         ? F
         : `${F}${U}${Join<R, U>}`

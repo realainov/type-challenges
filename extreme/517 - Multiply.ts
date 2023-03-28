@@ -26,17 +26,15 @@
 /* _____________ Your Code Here _____________ */
 
 import type { Length } from '@easy/18 - Length of Tuple';
-import type { NumberLike, Range } from '@medium/2257 - MinusOne';
 import type { Split } from '@hard/2822 - Split';
-import type { Addition, ColumnAddition } from './476 - Sum';
+import type { NumberLike, Range } from '@medium/2257 - MinusOne';
+import type { Flatten } from '@medium/459 - Flatten';
 import type { Join } from '@medium/5310 - Join';
+import type { Addition, ColumnAddition } from './476 - Sum';
 
-type Multiplication<
-    D1 extends NumberLike,
-    D2 extends NumberLike,
-    T extends any[] = [],
-    S extends 0[] = []
-> = `${Length<S>}` extends `${D2}` ? Length<T> : Multiplication<D1, D2, [...T, ...Range<D1>], [...S, 0]>;
+type Multiplication<D1 extends NumberLike, D2 extends NumberLike, T extends any[] = []> = `${Length<T>}` extends `${D2}`
+    ? Length<Flatten<T>>
+    : Multiplication<D1, D2, [...T, Range<D1>]>;
 
 type RowMultiplication<S extends any[], D extends NumberLike, T extends any[] = [], R = '0'> = S extends [
     ...infer SR,
